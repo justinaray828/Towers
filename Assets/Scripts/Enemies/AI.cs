@@ -13,7 +13,8 @@ public class AI : MonoBehaviour {
     [SerializeField] private float speedTotal = 10f;
     [SerializeField] private float distanceFromPlayer = 1f;
     [SerializeField] private float attackRate = 1f;
-    [SerializeField] private float attackDamage = 1f;
+    [SerializeField] private int attackDamage = 10;
+    [SerializeField] private int playerDamage = 1;
 
     private float speedCurrent;
 
@@ -53,6 +54,7 @@ public class AI : MonoBehaviour {
     {
         RaycastCheck(); //Updates hit with raycast collider
         TowerCheck(); //Uses hit to determin if a tower is in front of GameObject then attack it if so
+        PlayerCheck();
 
         if (keepDistance)
             KeepDistanceFromPlayer(distanceFromPlayer);
@@ -120,11 +122,30 @@ public class AI : MonoBehaviour {
         }
     }
 
+    private void PlayerCheck()
+    {
+        if(hit.collider)
+        {
+            if (hit.collider.tag == "Player")
+            {
+                AttackPlayer();
+            }
+        }
+    }
+
+    private void AttackPlayer()
+    {
+        if (CallDelay(attackDelayBool))
+        {
+            player.GetComponent<PlayerManager>().HurtPlayer(playerDamage);
+        }
+    }
+
     private void AttackGameObject(GameObject gameObject)
     {
         if(CallDelay(attackDelayBool))
         {
-
+            gameObject.GetComponent<Health>().HurtGameObject(attackDamage);
         }
     }
 

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class PunchingTower : MonoBehaviour {
 
+    [SerializeField] private GameObject punchTower; //Parent punch tower for animation update
     [SerializeField] private int damage;
     [SerializeField] private List<GameObject> targetList;
+    
     private bool punching = false;
     private Animator punchTowerAnimator;
     private DelayBool punchRate;
 
 	void Start ()
     {
-        punchTowerAnimator = GetComponent<Animator>();
+        punchTowerAnimator = punchTower.GetComponent<Animator>();
         punchRate = new DelayBool(GetPunchAnimationTime());
         targetList = new List<GameObject>();
 	}
