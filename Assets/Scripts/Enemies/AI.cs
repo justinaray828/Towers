@@ -92,6 +92,7 @@ public class AI : MonoBehaviour {
     private void FollowPlayer()
     {
         transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speedCurrent * Time.deltaTime);
+        transform.rotation = Utilities.QuaternionBetweenTwoPoints(transform.position, player.transform.position);
     }
 
     /// <summary>
