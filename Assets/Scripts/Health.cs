@@ -6,18 +6,35 @@ using UnityEngine.UI;
 /// <summary>
 /// Handles health
 /// </summary>
-public class Health : MonoBehaviour {
+public class Health : MonoBehaviour
+{
 
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] private float healthBarYPosition = .75f;
     private int currentHealth;
-    [SerializeField] private Slider healthSlider;
+    [SerializeField] private GameObject healthCanvas;
+    private Slider healthSlider;
 
     private void Start()
     {
+        healthCanvas = Instantiate(healthCanvas);
+        UpdateHealthCanvasPosition();
+        healthSlider = healthCanvas.transform.GetChild(0).GetComponent<Slider>();
+
         healthSlider.maxValue = maxHealth;
         healthSlider.minValue = 0;
         healthSlider.value = maxHealth;
         currentHealth = maxHealth;
+    }
+
+    private void Update()
+    {
+        UpdateHealthCanvasPosition();
+    }
+
+    private void UpdateHealthCanvasPosition()
+    {
+        healthCanvas.transform.position = new Vector3(transform.position.x, transform.position.y + healthBarYPosition, 0);
     }
 
     /// <summary>
@@ -34,7 +51,7 @@ public class Health : MonoBehaviour {
 
     private void ActivateHealthBar()
     {
-        if(currentHealth < maxHealth)
+        if (currentHealth < maxHealth)
         {
             healthSlider.gameObject.SetActive(true);
         }
@@ -47,6 +64,7 @@ public class Health : MonoBehaviour {
     {
         if (currentHealth <= 0)
         {
+            Destroy(healthCanvas);
             Destroy(gameObject);
         }
     }

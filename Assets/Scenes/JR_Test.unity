@@ -123,6 +123,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Alien_Shooting
       objectReference: {fileID: 0}
+    - target: {fileID: 1662154892685164, guid: d58ff96db15f09341a7117e95f0f3912, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4226578707253454, guid: d58ff96db15f09341a7117e95f0f3912, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5112,7 +5116,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 795746245}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &666595213
+--- !u!114 &666595217
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5121,28 +5125,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 666595212}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f689952811ffee4e956f8dcbe8f169a, type: 3}
+  m_Script: {fileID: 11500000, guid: e58fce7bec2cad44e80069b1b83b66dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &666595214
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 666595212}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 369f1a32663bab74c961d3af1e256359, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  maxHealth: 100
+  healthBarYPosition: 0.75
+  healthCanvas: {fileID: 3759514300855163207, guid: db81a7787b14c1d4c947da7ce2757b43,
+    type: 3}
 --- !u!4 &667185155 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4615062658778232, guid: e663aa749d4b11846a4b2a359a677fad,
@@ -5214,11 +5203,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4343859717218624, guid: 332f376fc31628a49823d524836b7bb1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114261825254902474, guid: 332f376fc31628a49823d524836b7bb1,
-        type: 3}
-      propertyPath: followPlayer
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224034279046408544, guid: 332f376fc31628a49823d524836b7bb1,
@@ -5755,6 +5739,93 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &996556073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996556071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12fc614d28111f6498f96c76a1b9d194, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followPlayer: 1
+  keepDistance: 0
+  followPath: 0
+  speedTotal: 0.5
+  distanceFromPlayer: 1
+  attackRate: 1
+  attackDamage: 10
+  playerDamage: 1
+  AI_Path: {fileID: 0}
+  pathPoints: []
+--- !u!114 &996556074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996556071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f71f35bdb354c6e4dbd10af0d39ecac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 5
+  bulletSpinSpeed: 5
+  spinDuration: 12
+  bulletDamage: 1
+--- !u!114 &996556076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996556071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f689952811ffee4e956f8dcbe8f169a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &996556077
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996556071}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &996556080
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996556071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58fce7bec2cad44e80069b1b83b66dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  healthBarYPosition: 0.75
+  healthCanvas: {fileID: 3759514300855163207, guid: db81a7787b14c1d4c947da7ce2757b43,
+    type: 3}
 --- !u!1 &1031714659
 GameObject:
   m_ObjectHideFlags: 0

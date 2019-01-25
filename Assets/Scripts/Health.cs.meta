@@ -1,9 +1,11 @@
 fileFormatVersion: 2
-guid: 5c86ae97fb6db50468553e40e8422391
+guid: e58fce7bec2cad44e80069b1b83b66dd
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - healthCanvas: {fileID: 3759514300855163207, guid: db81a7787b14c1d4c947da7ce2757b43,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
