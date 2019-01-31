@@ -10,12 +10,12 @@ public class PunchingTower : MonoBehaviour {
     
     private bool punching = false;
     private Animator punchTowerAnimator;
-    private DelayBool punchRate;
+    private Delay punchRate;
 
 	void Start ()
     {
         punchTowerAnimator = punchTower.GetComponent<Animator>();
-        punchRate = new DelayBool(GetPunchAnimationTime());
+        punchRate = new Delay(GetPunchAnimationTime());
         targetList = new List<GameObject>();
 	}
 	
@@ -23,7 +23,7 @@ public class PunchingTower : MonoBehaviour {
     {
         targetList.RemoveAll(item => item == null); //Removes GameObject from list if it is destroyed before update is called again
 
-        if (punchTowerAnimator.GetBool("Punching") && CallDelay(punchRate))
+        if (punchTowerAnimator.GetBool("Punching") && punchRate.CallDelay())
         { 
             foreach (GameObject target in targetList.ToArray())
             {
@@ -71,32 +71,4 @@ public class PunchingTower : MonoBehaviour {
         return time;
     }
 
-    //DelayBool Timer
-    //--------------------------------------------------------
-    private IEnumerator Delay(DelayBool delayBool)
-    {
-        delayBool.delayBoolState = false;
-        yield return new WaitForSeconds(delayBool.delayTime);
-        delayBool.delayBoolState = true;
-    }
-
-    /// <summary>
-    /// Starts Delay and returns true if the delay starts and false if the delay is in progress
-    /// </summary>
-    /// <param name="delayBool"></param>
-    /// <returns></returns>
-    private bool CallDelay(DelayBool delayBool)
-    {
-        if (delayBool.delayBoolState == true)
-        {
-            StartCoroutine(Delay(delayBool));
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    //--------------------------------------------------------
-    //
 }

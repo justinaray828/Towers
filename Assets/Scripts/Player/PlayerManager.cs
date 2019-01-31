@@ -18,7 +18,7 @@ public class PlayerManager : MonoBehaviour {
     [SerializeField] private float manaRegenRate;
     [SerializeField] private int manaRegenAmount;
     [SerializeField] private bool canRegenMana = true;
-    private DelayBool manaDelay;
+    private Delay manaDelay;
 
     //UI Control
     [SerializeField] private UIController uiController;
@@ -30,7 +30,7 @@ public class PlayerManager : MonoBehaviour {
         playersHearts = new Transform[maxPlayerHealth];
         InitilizePlayerHealth();
         InitilizePlayerMana();
-        manaDelay = new DelayBool(manaRegenRate);
+        manaDelay = new Delay(manaRegenRate);
     }
 
     private void Update()
@@ -176,7 +176,7 @@ public class PlayerManager : MonoBehaviour {
     /// </summary>
     private void ManaRegen()
     {
-        if(currentPlayerManaCap > currentPlayerMana && CallDelay(manaDelay))
+        if(currentPlayerManaCap > currentPlayerMana && manaDelay.CallDelay())
         {
             currentPlayerMana += manaRegenAmount;
             uiController.UpdatePlayerMana(currentPlayerMana);
@@ -229,32 +229,4 @@ public class PlayerManager : MonoBehaviour {
         }
     }
 
-    //DelayBool Timer
-    //--------------------------------------------------------
-    private IEnumerator Delay(DelayBool delayBool)
-    {
-        delayBool.delayBoolState = false;
-        yield return new WaitForSeconds(delayBool.delayTime);
-        delayBool.delayBoolState = true;
-    }
-
-    /// <summary>
-    /// Starts Delay and returns true if the delay starts and false if the delay is in progress
-    /// </summary>
-    /// <param name="delayBool"></param>
-    /// <returns></returns>
-    private bool CallDelay(DelayBool delayBool)
-    {
-        if (delayBool.delayBoolState == true)
-        {
-            StartCoroutine(Delay(delayBool));
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    //--------------------------------------------------------
-    //
 }

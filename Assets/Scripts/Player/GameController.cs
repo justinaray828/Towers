@@ -30,9 +30,9 @@ public class GameController : MonoBehaviour
 	private int numberOfTowers = 4; //Currently the game supports 4 towers
 	private int currentTower = 0; 
 
-	private DelayBool fireballDelay;
-	private DelayBool towerSelectDelay;
-    private DelayBool spellCastDelay;
+	private Delay fireballDelay;
+	private Delay towerSelectDelay;
+    private Delay spellCastDelay;
 
 	private CharacterSpriteUpdater characterSpriteUpdater;
     private TowerManager TowerManager;
@@ -68,10 +68,11 @@ public class GameController : MonoBehaviour
 		FillSpellArray ();
 		TowerToggle (currentTower);
 
-		//Sets the DelayBool information
-		fireballDelay = new DelayBool(TowerManager.GetDartDelayTime());
-		towerSelectDelay = new DelayBool(towerSelectDelayTime);
-        spellCastDelay = new DelayBool(towerBuildDelayTIme);
+        //Sets the DelayBool information
+        //fireballDelay = new DelayBool(TowerManager.GetDartDelayTime());
+        fireballDelay = new Delay(TowerManager.GetDartDelayTime());
+		towerSelectDelay = new Delay(towerSelectDelayTime);
+        spellCastDelay = new Delay(towerBuildDelayTIme);
 	}
 
 	void Update ()
@@ -147,7 +148,7 @@ public class GameController : MonoBehaviour
 	/// </summary>
 	private void Shoot()
     {
-		if ( Input.GetAxis("Shoot") == 1 && CallDelay(fireballDelay))
+		if ( Input.GetAxis("Shoot") == 1 && fireballDelay.CallDelay())
         {
             TowerManager.ShootDart(transform, rotation);
 		}
@@ -167,7 +168,7 @@ public class GameController : MonoBehaviour
                 axisInUse = true;
             }
         }
-        if (Input.GetAxis("SpellCast") == 0 && axisInUse == true && CallDelay(spellCastDelay))
+        if (Input.GetAxis("SpellCast") == 0 && axisInUse == true && spellCastDelay.CallDelay())
         {
             TowerManager.PlaceTower(currentTower, mousePosition, clickDownMousePosition);
             Destroy(clickLocationSpriteTemp);
@@ -182,7 +183,7 @@ public class GameController : MonoBehaviour
 	/// </summary>
 	void TowerSelect()
     {
-        if (Input.GetAxis("SpellSelect") == 1 && CallDelay(towerSelectDelay))
+        if (Input.GetAxis("SpellSelect") == 1 && towerSelectDelay.CallDelay())
         {
             if (currentTower != numberOfTowers - 1)
             {
@@ -195,7 +196,7 @@ public class GameController : MonoBehaviour
 
             TowerToggle(currentTower);
         }
-        else if (Input.GetAxis("SpellSelect") == -1 && CallDelay(towerSelectDelay))
+        else if (Input.GetAxis("SpellSelect") == -1 && towerSelectDelay.CallDelay())
         {
             if (currentTower != 0)
             {
@@ -208,22 +209,22 @@ public class GameController : MonoBehaviour
 
             TowerToggle(currentTower);
         }
-        else if (Input.GetAxis("Spell1") == 1 && CallDelay(towerSelectDelay))
+        else if (Input.GetAxis("Spell1") == 1 && towerSelectDelay.CallDelay())
         {
             currentTower = 0;
             TowerToggle(currentTower);
         }
-        else if (Input.GetAxis("Spell2") == 1 && CallDelay(towerSelectDelay))
+        else if (Input.GetAxis("Spell2") == 1 && towerSelectDelay.CallDelay())
         {
             currentTower = 1;
             TowerToggle(currentTower);
         }
-        else if (Input.GetAxis("Spell3") == 1 && CallDelay(towerSelectDelay))
+        else if (Input.GetAxis("Spell3") == 1 && towerSelectDelay.CallDelay())
         {
             currentTower = 2;
             TowerToggle(currentTower);
         }
-        else if (Input.GetAxis("Spell4") == 1 && CallDelay(towerSelectDelay))
+        else if (Input.GetAxis("Spell4") == 1 && towerSelectDelay.CallDelay())
         {
             currentTower = 3;
             TowerToggle(currentTower);
@@ -272,35 +273,5 @@ public class GameController : MonoBehaviour
 
 		}
 	}
-
-
-    //DelayBool Timer
-    //--------------------------------------------------------
-    private IEnumerator Delay(DelayBool delayBool)
-    {
-        delayBool.delayBoolState = false;
-        yield return new WaitForSeconds(delayBool.delayTime);
-        delayBool.delayBoolState = true;
-    }
-
-    /// <summary>
-    /// Starts Delay and returns true if the delay starts and false if the delay is in progress
-    /// </summary>
-    /// <param name="delayBool"></param>
-    /// <returns></returns>
-    private bool CallDelay(DelayBool delayBool)
-    {
-        if(delayBool.delayBoolState == true)
-        {
-            StartCoroutine(Delay(delayBool));
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    //--------------------------------------------------------
-    //
 
 }

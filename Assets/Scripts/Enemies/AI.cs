@@ -32,8 +32,8 @@ public class AI : MonoBehaviour {
 
     private TowerManager towerManager;
 
-    private DelayBool canShootBool;
-    private DelayBool attackDelayBool;
+    private Delay canShootBool;
+    private Delay attackDelayBool;
 
     private RaycastHit2D hit;
 
@@ -47,7 +47,7 @@ public class AI : MonoBehaviour {
 
         if(followPath) GetAIPath();
         speedCurrent = speedTotal;
-        attackDelayBool = new DelayBool(attackRate);
+        attackDelayBool = new Delay(attackRate);
 	}
 	
 	void Update ()
@@ -136,7 +136,7 @@ public class AI : MonoBehaviour {
 
     private void AttackPlayer()
     {
-        if (CallDelay(attackDelayBool))
+        if (attackDelayBool.CallDelay())
         {
             player.GetComponent<PlayerManager>().HurtPlayer(playerDamage);
         }
@@ -144,7 +144,7 @@ public class AI : MonoBehaviour {
 
     private void AttackGameObject(GameObject gameObject)
     {
-        if(CallDelay(attackDelayBool))
+        if(attackDelayBool.CallDelay())
         {
             gameObject.GetComponent<Health>().HurtGameObject(attackDamage);
         }
@@ -187,29 +187,5 @@ public class AI : MonoBehaviour {
     {
         speedCurrent = speedTotal;
     }
-
-    //Delay Timer Code
-    //--------------------------------------------------------
-    private bool CallDelay(DelayBool delayBool)
-    {
-        if (delayBool.delayBoolState == true)
-        {
-            StartCoroutine(Delay(delayBool));
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    private IEnumerator Delay(DelayBool delayBool)
-    {
-        delayBool.delayBoolState = false;
-        yield return new WaitForSeconds(delayBool.delayTime);
-        delayBool.delayBoolState = true;
-    }
-    //--------------------------------------------------------
-    //
 
 }

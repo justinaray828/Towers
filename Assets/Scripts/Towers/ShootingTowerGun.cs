@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShootingTowerGun : MonoBehaviour {
 
-    private DelayBool shootingDelay;
+    private Delay shootingDelay;
     [SerializeField] float shootingRate = 1f;
     [SerializeField] float shootingSpeed = 1f;
     [SerializeField] int shootingDamage= 1;
@@ -17,7 +17,7 @@ public class ShootingTowerGun : MonoBehaviour {
 
     void Start ()
     {
-        shootingDelay = new DelayBool(shootingRate);
+        shootingDelay = new Delay(shootingRate);
         player = GameObject.FindGameObjectWithTag("Player");
         pooledShooting = new PooledShooting();
 	}
@@ -58,39 +58,10 @@ public class ShootingTowerGun : MonoBehaviour {
 
     private void shoot()
     {
-        if (CallDelay(shootingDelay))
+        if (shootingDelay.CallDelay())
         {
             pooledShooting.ShootProjectile(pooledShooting.dart, shootingDamage, shootingSpeed, transform.position, gunRotation);
         }
     }
 
-
-    //DelayBool Timer
-    //--------------------------------------------------------
-    private IEnumerator Delay(DelayBool delayBool)
-    {
-        delayBool.delayBoolState = false;
-        yield return new WaitForSeconds(delayBool.delayTime);
-        delayBool.delayBoolState = true;
-    }
-
-    /// <summary>
-    /// Starts Delay and returns true if the delay starts and false if the delay is in progress
-    /// </summary>
-    /// <param name="delayBool"></param>
-    /// <returns></returns>
-    private bool CallDelay(DelayBool delayBool)
-    {
-        if (delayBool.delayBoolState == true)
-        {
-            StartCoroutine(Delay(delayBool));
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    //--------------------------------------------------------
-    //
 }
