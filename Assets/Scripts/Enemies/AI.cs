@@ -32,8 +32,8 @@ public class AI : MonoBehaviour {
 
     private TowerManager towerManager;
 
-    private Delay canShootBool;
-    private Delay attackDelayBool;
+    private Delay canShootDelay;
+    private Delay attackDelay;
 
     private RaycastHit2D hit;
 
@@ -47,7 +47,7 @@ public class AI : MonoBehaviour {
 
         if(followPath) GetAIPath();
         speedCurrent = speedTotal;
-        attackDelayBool = new Delay(attackRate);
+        attackDelay = new Delay(attackRate);
 	}
 	
 	void Update ()
@@ -136,7 +136,7 @@ public class AI : MonoBehaviour {
 
     private void AttackPlayer()
     {
-        if (attackDelayBool.CallDelay())
+        if (attackDelay.CallDelay())
         {
             player.GetComponent<PlayerManager>().HurtPlayer(playerDamage);
         }
@@ -144,7 +144,7 @@ public class AI : MonoBehaviour {
 
     private void AttackGameObject(GameObject gameObject)
     {
-        if(attackDelayBool.CallDelay())
+        if(attackDelay.CallDelay())
         {
             gameObject.GetComponent<Health>().HurtGameObject(attackDamage);
         }
