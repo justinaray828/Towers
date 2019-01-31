@@ -77,22 +77,26 @@ public class GameController : MonoBehaviour
 
 	void Update ()
     {
-		Movement ();
 		Direction ();
 		Shoot ();
 		TowerSelect ();
         BuildTower();
 	}
 
-	/// <summary>
-	/// Takes keyboard input to move sprite on screen
-	/// </summary>
-	void Movement()
+    private void FixedUpdate()
+    {
+        Movement();
+    }
+
+    /// <summary>
+    /// Takes keyboard input to move sprite on screen
+    /// </summary>
+    void Movement()
     {
         float translationX = Input.GetAxis("Horizontal");// * playerSpeed * Time.deltaTime;
         float translationY = Input.GetAxis("Vertical");// * playerSpeed * Time.deltaTime;
         Vector2 movement = new Vector2(translationX, translationY);
-        rb2D.AddForce(movement * playerSpeed);
+        rb2D.velocity = movement * playerSpeed;
 
         //Animation update
         float movementMagnitude = movement.magnitude;

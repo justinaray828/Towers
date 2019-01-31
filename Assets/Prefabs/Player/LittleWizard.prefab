@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a7e47b538c139459e885c6825f77ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 20
+  playerSpeed: 3
   towerSelectDelayTime: 0.1
   towerBuildDelayTIme: 0.1
   clickLocationSprite: {fileID: 1508578726012836, guid: 857c77507a58c1f43b4be98a0a762302,

@@ -2894,6 +2894,11 @@ PrefabInstance:
       propertyPath: spellSelect
       value: 
       objectReference: {fileID: 108039331}
+    - target: {fileID: 114415617714834234, guid: 5f21be4ecc985654682deb77d9651342,
+        type: 3}
+      propertyPath: playerSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 114770080787132086, guid: 5f21be4ecc985654682deb77d9651342,
         type: 3}
       propertyPath: healthParent
