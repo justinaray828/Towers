@@ -25,11 +25,18 @@ public class Health : MonoBehaviour
         healthSlider.minValue = 0;
         healthSlider.value = maxHealth;
         currentHealth = maxHealth;
+        ActivateHealthBar();
     }
 
     private void Update()
     {
         UpdateHealthCanvasPosition();
+        ActivateHealthBar();
+    }
+
+    private void OnDestroy()
+    {
+        Destroy(healthCanvas);
     }
 
     private void UpdateHealthCanvasPosition()
@@ -46,15 +53,12 @@ public class Health : MonoBehaviour
         currentHealth -= damage;
         healthSlider.value = currentHealth;
         HealthCheck();
-        ActivateHealthBar();
     }
 
     private void ActivateHealthBar()
     {
-        if (currentHealth < maxHealth)
-        {
-            healthSlider.gameObject.SetActive(true);
-        }
+        bool state = currentHealth == maxHealth ? false : true; //Turn off health if health is full
+        healthSlider.gameObject.SetActive(state);
     }
 
     /// <summary>
@@ -64,7 +68,6 @@ public class Health : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            Destroy(healthCanvas);
             Destroy(gameObject);
         }
     }
