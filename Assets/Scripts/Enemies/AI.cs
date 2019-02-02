@@ -16,6 +16,8 @@ public class AI : MonoBehaviour {
     [SerializeField] private int attackDamage = 10;
     [SerializeField] private int playerDamage = 1;
 
+    private bool inFrontOfEnemy = false;
+
     private float speedCurrent;
 
     private int totalPathPoints;
@@ -49,25 +51,29 @@ public class AI : MonoBehaviour {
         speedCurrent = speedTotal;
         attackDelay = new Delay(attackRate);
 	}
-	
-	void Update ()
+
+
+    private void FixedUpdate()
     {
         RaycastCheck(); //Updates hit with raycast collider
         TowerCheck(); //Uses hit to determin if a tower is in front of GameObject then attack it if so
         PlayerCheck();
 
+        if (!inFrontOfEnemy)
+        {
+            if (followPlayer)
+            {
+                FollowPlayer();
+            }
+            else if (followPath)
+            {
+                FollowPath(pathPoints);
+            }
+        }
+
         if (keepDistance)
             KeepDistanceFromPlayer(distanceFromPlayer);
-
-        if (followPlayer)
-        {
-            FollowPlayer();
-        }
-        else if (followPath)
-        {
-            FollowPath(pathPoints);
-        }
-	}
+    }
 
     private void FollowPath(Vector3[] path)
     {
@@ -104,8 +110,8 @@ public class AI : MonoBehaviour {
         var layerMask = ~((1 << 2) | (1 << 11)); 
 
         Vector2 relativePosition = player.transform.position - transform.position;
-        hit = Physics2D.Raycast(transform.position, relativePosition, 1f, layerMask);
-
+        hit = Physics2D.Raycast(transform.position, relativePosition, .25f, layerMask);
+        Debug.DrawRay(transform.position, relativePosition);
         return hit;
     }
 
@@ -117,10 +123,14 @@ public class AI : MonoBehaviour {
             {
                 if (tower.tag == hit.collider.tag)
                 {
+                    inFrontOfEnemy = true;
                     AttackGameObject(hit.collider.gameObject);
+                    return;
                 }
             }
         }
+
+        inFrontOfEnemy = false;
     }
 
     private void PlayerCheck()
